@@ -4,15 +4,15 @@ const User = require('../../models/User');
 const passport = require('passport');
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = 'SECRET';
+opts.secretOrKey = process.env.JWT_TOKEN_SECRET;
 
 module.exports = () => {
   passport.use(
     new JwtStrategy(opts, (payload, done) => {
-      User.findOne({ where: { email: payload.email } })
+      User.findOne({ where: { username: payload.username } })
         .then((user) => {
           if (!user) {
-            return done(null, false);
+            return done(null, payload);
           } else {
             return done(null, user);
           }
