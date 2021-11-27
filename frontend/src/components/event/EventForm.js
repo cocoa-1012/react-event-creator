@@ -365,7 +365,7 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
                     validator(_, value) {
                       const result =
                         moment(value).diff(
-                          moment(getFieldValue.time_from).toDate()
+                          moment(getFieldValue().time_from).toDate()
                         ) > 0;
                       if (result) {
                         return Promise.resolve();
