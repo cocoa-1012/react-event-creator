@@ -4,6 +4,7 @@ const generate = require('../utils/passwordGenerator');
 const bcrypt = require('bcrypt');
 const Event = require('../models/Event');
 const { sendMail } = require('../utils/mail');
+const moment = require('moment');
 
 const controller = {
   create: async (req, res) => {
@@ -52,7 +53,7 @@ const controller = {
         username,
         password: hashPassword,
         email,
-        last_login: new Date(),
+        last_login: moment().format(),
       };
 
       const userSave = await User.create(userData);
