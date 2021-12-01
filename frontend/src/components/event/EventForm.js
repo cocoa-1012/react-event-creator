@@ -271,7 +271,7 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
           <Row gutter={20} style={{ marginTop: 10 }}>
             <Col span={12}>
               <Form.Item
-                dependencies={['date_to']}
+                dependencies={['date_to', 'time_from', 'time_to']}
                 name='date_from'
                 rules={[
                   {
@@ -280,6 +280,9 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
                   },
                   () => ({
                     validator(_, value) {
+                      if (!value) {
+                        return Promise.resolve();
+                      }
                       const result = moment(value).diff(moment().toDate()) > 0;
                       if (result) {
                         return Promise.resolve();
@@ -298,19 +301,18 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
             </Col>
             <Col span={12}>
               <Form.Item
-                dependencies={['date_from']}
+                dependencies={['date_from', 'time_to', 'time_from']}
                 key='date_to'
                 name='date_to'
                 rules={[
-                  {
-                    required: true,
-                    message: 'Event date required!',
-                  },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
+                      if (!value) {
+                        return Promise.resolve();
+                      }
                       const result =
                         moment(value).diff(
-                          moment(getFieldValue.date_from).toDate()
+                          moment(getFieldValue().date_from).toDate()
                         ) > 0;
                       if (result) {
                         return Promise.resolve();
@@ -330,34 +332,50 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
             </Col>
             <Col span={12}>
               <Form.Item
-                dependencies={['time_to']}
+                dependencies={['time_to', 'date_from', 'date_to']}
                 name='time_from'
                 key='time_from'
                 rules={[
-                  {
-                    required: true,
-                    message: 'Time is required!',
-                  },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      const date_to = getFieldValue().date_to;
+                      if (date_to) {
+                        return Promise.resolve();
+                      }
+                      if (!value) {
+                        return Promise.reject('Time from is required');
+                      }
+                      return Promise.resolve();
+                    },
+                  }),
                 ]}
               >
                 <TimePicker
                   style={{ width: '100%' }}
                   placeholder='Event time from'
+                  format='HH:mm'
+                  minuteStep={15}
+                  showNow={false}
                 />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
-                dependencies={['time_from']}
+                dependencies={['time_from', 'date_from', 'date_to']}
                 name='time_to'
                 key='time_to'
                 rules={[
-                  {
-                    required: true,
-                    message: 'Time is required!',
-                  },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
+                      const date_to = getFieldValue().date_to;
+                      console.log({ a: getFieldValue() });
+
+                      if (!value && !date_to) {
+                        return Promise.reject('Time to is required');
+                      }
+                      if (!value && date_to) {
+                        return Promise.resolve();
+                      }
                       const result =
                         moment(value).diff(
                           moment(getFieldValue().time_from).toDate()
@@ -375,6 +393,9 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
                 <TimePicker
                   style={{ width: '100%' }}
                   placeholder='Event time to'
+                  format='HH:mm'
+                  minuteStep={15}
+                  showNow={false}
                 />
               </Form.Item>
             </Col>
