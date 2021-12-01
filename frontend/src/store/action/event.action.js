@@ -152,7 +152,12 @@ export const eventImageUpload =
         payload: { image: TempData },
       });
 
-      const { data } = await axios.post(`/event/${id}/image`, formData);
+      const { data } = await axios.post(`/event/${id}/image`, formData, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
       message.success('Image uploaded successfully');
 

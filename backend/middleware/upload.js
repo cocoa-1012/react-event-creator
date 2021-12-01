@@ -21,7 +21,6 @@ const upload = multer({
     fileSize: 1024 * 1024 * 1024 * 5,
   },
   fileFilter: (req, file, callback) => {
-    console.log({ file });
     const types = /jpeg|jpg|png/;
     const extName = types.test(path.extname(file.originalname).toLowerCase());
     const mimeTypes = types.test(file.mimetype);

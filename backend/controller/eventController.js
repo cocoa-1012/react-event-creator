@@ -171,9 +171,12 @@ const controller = {
     try {
       if (req.file) {
         const { filename } = req.file;
+        const { width, height } = req.body;
         const imageData = {
           filename,
           event_id: req.params.eventId,
+          width: parseInt(width),
+          height: parseInt(height),
         };
         const imageSave = await Image.create(imageData);
         const image = {

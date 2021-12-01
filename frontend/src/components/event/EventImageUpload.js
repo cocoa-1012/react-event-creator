@@ -24,16 +24,25 @@ const EventImageUpload = ({
   };
 
   const imageOnChangHandler = (e) => {
+    const file = e.target.files[0];
     const reader = new FileReader();
-    reader.onload = () => {
+    reader.onload = (ev) => {
       if (reader.readyState === 2) {
         const url = reader.result;
         const formData = new FormData();
-        formData.append('image', e.target.files[0], e.target.files[0].filename);
-        eventImageUpload({ id, url, formData });
+        formData.append('image', file, file.filename);
+        const _loadedImageUrl = ev.target.result;
+        const image = document.createElement('img');
+        image.src = _loadedImageUrl;
+        image.onload = () => {
+          const { width, height } = image;
+          formData.append('width', width);
+          formData.append('height', height);
+          eventImageUpload({ id, url, formData });
+        };
       }
     };
-    reader.readAsDataURL(e.target.files[0]);
+    reader.readAsDataURL(file);
   };
 
   return (
