@@ -4,6 +4,7 @@ import { createUseStyles } from 'react-jss';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import routeList from 'utils/routeList';
+import useSetTitle from 'hook/setTitle';
 
 const useStyles = createUseStyles({
   main: {
@@ -21,7 +22,7 @@ const useStyles = createUseStyles({
 
 const Login = () => {
   const classes = useStyles();
-
+  useSetTitle('Login Here');
   const { isAuthenticated } = useSelector((state) => state.auth);
   if (isAuthenticated) {
     return <Navigate to={routeList.event.view} />;

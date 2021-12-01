@@ -7,11 +7,12 @@ import { findPostForEdit } from 'store/action/event.action';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import routeList from 'utils/routeList';
+import useSetTitle from 'hook/setTitle';
 
 const EditEvent = ({ findPostForEdit }) => {
   const { id } = useParams();
   useEffect(() => findPostForEdit(id), [id, findPostForEdit]);
-
+  useSetTitle('Edit Event');
   const { isAuthenticated } = useSelector((state) => state.auth);
   if (!isAuthenticated) {
     return <Navigate to='/' />;

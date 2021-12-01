@@ -6,9 +6,11 @@ import { Link } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import routeList from 'utils/routeList';
+import useSetTitle from 'hook/setTitle';
 
 const AddUser = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
+  useSetTitle('Add User');
   if (!isAuthenticated) {
     return <Navigate to='/' />;
   }
