@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import EventImageUpload from 'components/event/EventImageUpload';
 import { useParams } from 'react-router';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { connect, useSelector } from 'react-redux';
+import { Button, Col, Row } from 'antd';
+import routeList from 'utils/routeList';
 
 const Images = ({ events }) => {
   const { id } = useParams();
@@ -18,6 +20,13 @@ const Images = ({ events }) => {
     <>
       <h2>Image upload</h2>
       <EventImageUpload id={id} />
+      <Row>
+        <Col>
+          <Button type='primary' style={{ marginTop: 10 }}>
+            <Link to={routeList.event.add}>Done Image upload</Link>
+          </Button>
+        </Col>
+      </Row>
     </>
   );
 };

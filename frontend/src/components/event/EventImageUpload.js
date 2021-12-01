@@ -9,8 +9,6 @@ import {
 } from 'store/action/event.action';
 
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import routeList from 'utils/routeList';
 
 const EventImageUpload = ({
   fetchEventImages,
@@ -80,13 +78,6 @@ const EventImageUpload = ({
       <Row>
         <Col>
           <input type='file' onChange={imageOnChangHandler} />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Button type='primary' style={{ marginTop: 10 }}>
-            <Link to={routeList.event.add}>Done Image upload</Link>
-          </Button>
         </Col>
       </Row>
     </>
