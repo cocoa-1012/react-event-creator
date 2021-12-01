@@ -1,0 +1,21 @@
+body {
+  background-color: #dbdbdb;
+}
+
+.bg-accent-blue {
+  background: #3c92a6 !important;
+}
+.bg-accent-red {
+  background: #bf4417 !important;
+}
+.bg-grey-red {
+  background: #d9ccc5 !important;
+}
+.table-wrapper {
+  overflow-x: scroll;
+}
+
+/*  upload image */
+.event-upload-image {
+  object-fit: cover;
+}

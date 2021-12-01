@@ -1,0 +1,147 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- Generation Time: Nov 19, 2021 at 10:27 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `event-creator`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `events`
+--
+
+CREATE TABLE `events` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `city` varchar(200) DEFAULT NULL,
+  `country` varchar(200) DEFAULT NULL,
+  `coordinates` varchar(255) DEFAULT NULL,
+  `description` text NOT NULL,
+  `owner` varchar(200) DEFAULT NULL,
+  `date_from` varchar(255) NOT NULL,
+  `date_to` varchar(255) DEFAULT NULL,
+  `time_from` varchar(255) DEFAULT NULL,
+  `time_to` varchar(255) DEFAULT NULL,
+  `timezone` varchar(255) DEFAULT NULL,
+  `ticket_price` int(100) DEFAULT NULL,
+  `source_url` varchar(255) NOT NULL,
+  `rating` int(11) DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `isDeleted` tinyint(1) NOT NULL DEFAULT 0,
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `images`
+--
+
+CREATE TABLE `images` (
+  `id` int(11) NOT NULL,
+  `filename` varchar(255) NOT NULL,
+  `event_id` int(11) NOT NULL,
+  `width` int(11) NOT NULL,
+  `height` int(11) NOT NULL,
+  `isDeleted` tinyint(1) NOT NULL DEFAULT 0,
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `name` varchar(250) NOT NULL,
+  `username` varchar(15) NOT NULL,
+  `password` varchar(256) NOT NULL,
+  `email` varchar(300) NOT NULL,
+  `user_type` varchar(1) NOT NULL DEFAULT 'U',
+  `last_login` varchar(256) NOT NULL,
+  `isDeleted` tinyint(1) NOT NULL DEFAULT 0,
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `username`, `password`, `email`, `user_type`, `last_login`, `isDeleted`, `createdAt`, `updatedAt`) VALUES
+(1, 'Admin', 'admin', '$2b$10$eUwajdHgMXfNPBneGmu0oeeujUgYxcQleYit6IY8DB2UYnsAeAxgO', 'admin@admin.com', 'A', '2021-11-19T15:24:45+06:00', 0, '2021-11-18 15:01:46', '2021-11-19 09:26:34');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `events`
+--
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `User` (`created_by`);
+
+--
+-- Indexes for table `images`
+--
+ALTER TABLE `images`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `filename` (`filename`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `login` (`username`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `events`
+--
+ALTER TABLE `events`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `images`
+--
+ALTER TABLE `images`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
