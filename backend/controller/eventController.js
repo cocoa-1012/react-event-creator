@@ -224,7 +224,7 @@ const controller = {
       const { imageId } = req.params;
       await Image.update({ isDeleted: true }, { where: { id: imageId } });
 
-      return res.status(200).json({ message: 'Image Delete successfully!' });
+      return res.status(200).json({ message: 'Image Deleted successfully!' });
     } catch (e) {
       internalServerError(res, e);
     }
