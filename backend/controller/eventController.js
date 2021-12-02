@@ -120,7 +120,6 @@ const controller = {
         time_to,
         source_url,
         rating,
-        created_by,
         timezone,
       } = req.body;
 
@@ -139,7 +138,6 @@ const controller = {
         time_to: time_to || null,
         source_url,
         rating: rating || null,
-        created_by,
         timezone: timezone || null,
       };
 
