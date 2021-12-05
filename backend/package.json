@@ -9,16 +9,18 @@
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install"
   },
   "keywords": [],
-  "author": "Md Monirul Islam",
+  "author": {
+    "name": "Md Monirul Islam",
+    "email": "mmislam027@gmail.com",
+    "url": "https://github.com/mdmonir027"
+  },
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "concurrently": "^6.4.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-validator": "^6.13.0",
-    "global": "^4.4.0",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",
     "mariadb": "^2.5.5",
