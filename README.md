@@ -73,6 +73,16 @@ REACT_APP_BASE_URL=
 
 `N:B: Add /api after the base url `
 
+# Project Setup in Server
+
+- Backend setup in server same as Backend setup
+- Frontend setup
+  - Got to frontend directory
+  - Run `yarn` or `npm install`
+  - Run `yarn global add serve` or `npm i -g serve`
+  - Run `yarn build` or `npm build`
+  - Run `serve -s build`
+
 ## Commands
 
 - Base
