@@ -64,12 +64,6 @@ USER_MAIL_PASSWORD=
 
 - Go to frontend directory , run `cd frontend`
 - Install all packages , run `yarn` or `npm install`
-- Create `.env` file
-- And fill this property with values
-
-```
-REACT_APP_BASE_URL=
-```
 
 `N:B: Add /api after the base url `
 

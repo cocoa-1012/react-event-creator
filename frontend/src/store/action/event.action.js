@@ -5,11 +5,10 @@ import shortid from 'shortid';
 import { message } from 'antd';
 
 axios.defaults.headers.common['Authorization'] = getToken();
-axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 export const eventAdd = (values, cb) => async (dispatch) => {
   try {
-    const res = await axios.post('/event', values);
+    const res = await axios.post('/api/event', values);
     const event = res.data;
 
     dispatch({
@@ -33,7 +32,7 @@ export const eventAdd = (values, cb) => async (dispatch) => {
 
 export const fetchAllEvents = () => async (dispatch) => {
   try {
-    const res = await axios.get('/event');
+    const res = await axios.get('/api/event');
 
     dispatch({
       type: types.SET_ALL_EVENTS,
@@ -54,7 +53,7 @@ export const fetchAllEvents = () => async (dispatch) => {
 
 export const findPostForEdit = (id) => async (dispatch) => {
   try {
-    const res = await axios.get(`/event/${id}`);
+    const res = await axios.get(`/api/event/${id}`);
     const event = res.data;
     dispatch({
       type: types.SET_EVENT_FOR_EDIT,
@@ -75,7 +74,7 @@ export const findPostForEdit = (id) => async (dispatch) => {
 
 export const eventUpdate = (values, id, cb) => async (dispatch) => {
   try {
-    const res = await axios.put(`/event/${id}`, values);
+    const res = await axios.put(`/api/event/${id}`, values);
     const event = res.data;
 
     dispatch({
@@ -99,7 +98,7 @@ export const eventUpdate = (values, id, cb) => async (dispatch) => {
 
 export const deleteEvent = (id) => async (dispatch) => {
   try {
-    await axios.delete(`/event/${id}`);
+    await axios.delete(`/api/event/${id}`);
 
     dispatch({
       type: types.DELETE_EVENT,
@@ -120,7 +119,7 @@ export const deleteEvent = (id) => async (dispatch) => {
 
 export const fetchEventImages = (id) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/event/${id}/image`);
+    const { data } = await axios.get(`/api/event/${id}/image`);
 
     dispatch({
       type: types.FETCH_EVENT_IMAGES,
@@ -152,7 +151,7 @@ export const eventImageUpload =
         payload: { image: TempData },
       });
 
-      const { data } = await axios.post(`/event/${id}/image`, formData, {
+      const { data } = await axios.post(`/api/event/${id}/image`, formData, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'multipart/form-data',
@@ -185,7 +184,7 @@ export const eventImageDelete =
         payload: { id },
       });
 
-      const { data } = await axios.delete(`/event/image/${id}`);
+      const { data } = await axios.delete(`/api/event/image/${id}`);
       message.success(data.message);
 
       dispatch({
