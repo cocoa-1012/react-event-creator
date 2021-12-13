@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 19, 2021 at 10:27 AM
+-- Generation Time: Dec 13, 2021 at 09:33 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `event-creator`
+-- Database: `event-manage`
 --
 
 -- --------------------------------------------------------
@@ -41,7 +41,7 @@ CREATE TABLE `events` (
   `time_from` varchar(255) DEFAULT NULL,
   `time_to` varchar(255) DEFAULT NULL,
   `timezone` varchar(255) DEFAULT NULL,
-  `ticket_price` int(100) DEFAULT NULL,
+  `ticket_price` varchar(100) DEFAULT NULL,
   `source_url` varchar(255) NOT NULL,
   `rating` int(11) DEFAULT NULL,
   `created_by` int(11) NOT NULL,
@@ -81,6 +81,7 @@ CREATE TABLE `users` (
   `email` varchar(300) NOT NULL,
   `user_type` varchar(1) NOT NULL DEFAULT 'U',
   `last_login` varchar(256) NOT NULL,
+  `isPassReset` tinyint(1) NOT NULL DEFAULT 0,
   `isDeleted` tinyint(1) NOT NULL DEFAULT 0,
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
   `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -90,8 +91,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `username`, `password`, `email`, `user_type`, `last_login`, `isDeleted`, `createdAt`, `updatedAt`) VALUES
-(1, 'Admin', 'admin', '$2b$10$eUwajdHgMXfNPBneGmu0oeeujUgYxcQleYit6IY8DB2UYnsAeAxgO', 'admin@admin.com', 'A', '2021-11-19T15:24:45+06:00', 0, '2021-11-18 15:01:46', '2021-11-19 09:26:34');
+INSERT INTO `users` (`id`, `name`, `username`, `password`, `email`, `user_type`, `last_login`, `isPassReset`, `isDeleted`, `createdAt`, `updatedAt`) VALUES
+(1, 'Admin', 'admin', '$2b$10$efprKOB/aO/IcetSkANCIujWUbfbU8UgetrLagJuvfPMPrfyXSMlq', 'admin@admin.com', 'A', '2021-12-13T13:58:06+06:00', 0, 0, '2021-11-18 15:01:46', '2021-12-13 08:26:07');
 
 --
 -- Indexes for dumped tables
@@ -127,19 +128,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

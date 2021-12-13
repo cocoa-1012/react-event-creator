@@ -41,16 +41,22 @@ const columns = [
     render: (id, { deleteUser, isAdmin }) => {
       return (
         <Space>
-          <Popconfirm
-            okText='Yes'
-            cancelText='No'
-            title='Are you sure to delete this user?'
-            onConfirm={() => deleteUser(id)}
-          >
-            <Button disabled={isAdmin}>
+          {isAdmin ? (
+            <Button disabled={true}>
               <FaTrashAlt />
             </Button>
-          </Popconfirm>
+          ) : (
+            <Popconfirm
+              okText='Yes'
+              cancelText='No'
+              title='Are you sure to delete this user?'
+              onConfirm={() => deleteUser(id)}
+            >
+              <Button>
+                <FaTrashAlt />
+              </Button>
+            </Popconfirm>
+          )}
         </Space>
       );
     },

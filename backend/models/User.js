@@ -26,6 +26,10 @@ const userSchema = {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+  isPassReset: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 };
 
 const User = db.define('user', userSchema);

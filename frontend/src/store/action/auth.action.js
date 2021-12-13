@@ -73,30 +73,40 @@ export const updateUserFullName = (name) => async (dispatch) => {
   }
 };
 
-export const updatePassword = (values, cb) => async (dispatch) => {
-  try {
-    const { data } = await axios.put('/api/auth/me/password', values);
+export const updatePassword =
+  (values, queryMessage, cb) => async (dispatch) => {
+    try {
+      const { data } = await axios.put('/api/auth/me/password', values);
 
-    message.success({
-      content: data.message,
-      style: {
-        marginTop: '10vh',
-      },
-    });
+      message.success({
+        content: data.message,
+        style: {
+          marginTop: '10vh',
+        },
+      });
 
-    cb(true);
-  } catch (e) {
-    dispatch({
-      type: types.SET_AUTH_ERROR,
-      payload: {
-        type: 'password',
-        errors: e?.response?.data,
-      },
-    });
+      if (queryMessage) {
+        dispatch({
+          type: types.SET_AUTH_USER_IS_PASS_RESET,
+          payload: {
+            isPassReset: true,
+          },
+        });
+      }
 
-    cb(false);
-  }
-};
+      cb(true);
+    } catch (e) {
+      dispatch({
+        type: types.SET_AUTH_ERROR,
+        payload: {
+          type: 'password',
+          errors: e?.response?.data,
+        },
+      });
+
+      cb(false);
+    }
+  };
 
 export const logout = () => (dispatch) => {
   removeToken();

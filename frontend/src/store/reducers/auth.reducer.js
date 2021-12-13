@@ -47,6 +47,17 @@ const authReducer = (state = init, action) => {
         },
       };
     }
+    case types.SET_AUTH_USER_IS_PASS_RESET: {
+      const { isPassReset } = action.payload;
+
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          isPassReset,
+        },
+      };
+    }
 
     default:
       return state;

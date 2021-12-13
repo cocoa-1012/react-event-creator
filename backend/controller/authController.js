@@ -90,7 +90,10 @@ const controller = {
       const salt = await bcrypt.genSalt(parseInt(SALT_ROUND));
       const password = await bcrypt.hash(newPassword, salt);
 
-      await User.update({ password }, { where: { id: req.user.id } });
+      await User.update(
+        { password, isPassReset: true },
+        { where: { id: req.user.id } }
+      );
       return res.status(200).json({
         message: 'User password updated',
       });
