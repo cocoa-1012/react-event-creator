@@ -16,7 +16,7 @@ const UpdatePassword = () => {
 
   useEffect(() => {
     if (isPassReset && message) {
-      navigate(routeList.event.view);
+      navigate(-1);
     }
   }, [isPassReset, navigate, message]);
 

@@ -368,7 +368,10 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
                   ({ getFieldValue }) => ({
                     validator(_, value) {
                       const date_to = getFieldValue().date_to;
-                      console.log({ a: getFieldValue() });
+
+                      if (value && date_to) {
+                        return Promise.resolve();
+                      }
 
                       if (!value && !date_to) {
                         return Promise.reject('Time to is required');
