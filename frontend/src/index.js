@@ -17,13 +17,21 @@ if (getToken()) {
   });
 }
 
+const StrictMode = ({ children }) => {
+  if (process.env.NODE_ENV !== 'development') {
+    return children;
+  }
+
+  return <React.StrictMode>{children}</React.StrictMode>;
+};
+
 ReactDOM.render(
   <Provider store={store}>
-    <React.StrictMode>
+    <StrictMode>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </React.StrictMode>
+    </StrictMode>
   </Provider>,
   document.getElementById('root')
 );

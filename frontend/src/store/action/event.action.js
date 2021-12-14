@@ -18,7 +18,7 @@ export const eventAdd = (values, cb) => async (dispatch) => {
         event,
       },
     });
-    cb(true, { id: event.id });
+    cb(true, event.id);
   } catch (e) {
     dispatch({
       type: types.SET_EVENT_ERROR,

@@ -10,7 +10,9 @@ const controller = {
     const { JWT_TOKEN_SECRET } = process.env;
     try {
       const { username, password } = req.body;
-      const user = await User.findOne({ where: { username } });
+      const user = await User.findOne({
+        where: { username, isDeleted: false },
+      });
       const errorResponseMessage = {
         username: 'Username is incorrect!',
         password: 'Password is incorrect!',

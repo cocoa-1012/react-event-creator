@@ -137,7 +137,7 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
         }
       });
     } else {
-      eventAdd({ ...values, country, timezone }, (result, { id }) => {
+      eventAdd({ ...values, country, timezone }, (result, id) => {
         if (result) {
           form.resetFields();
           message.success('Event created. Redirecting......');
@@ -272,7 +272,6 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
             <Col span={12}>
               <Form.Item
                 dependencies={['date_to']}
-                hasFeedback
                 name='date_from'
                 rules={[
                   {
@@ -300,7 +299,6 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
             <Col span={12}>
               <Form.Item
                 dependencies={['date_from']}
-                hasFeedback
                 key='date_to'
                 name='date_to'
                 rules={[
@@ -333,10 +331,8 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
             <Col span={12}>
               <Form.Item
                 dependencies={['time_to']}
-                hasFeedback
                 name='time_from'
                 key='time_from'
-                defaultValue={moment('12:08:23')}
                 rules={[
                   {
                     required: true,
@@ -353,7 +349,6 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
             <Col span={12}>
               <Form.Item
                 dependencies={['time_from']}
-                hasFeedback
                 name='time_to'
                 key='time_to'
                 rules={[
@@ -365,7 +360,7 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
                     validator(_, value) {
                       const result =
                         moment(value).diff(
-                          moment(getFieldValue.time_from).toDate()
+                          moment(getFieldValue().time_from).toDate()
                         ) > 0;
                       if (result) {
                         return Promise.resolve();
@@ -385,7 +380,6 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
             </Col>
             <Col span={12}>
               <Form.Item
-                hasFeedback
                 name='timezone'
                 rules={[
                   {
@@ -407,7 +401,6 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
                       .toLowerCase()
                       .indexOf(input.toLowerCase()) >= 0
                   }
-                  hasFeedback
                   onChange={(value) => setTimezone(value)}
                 >
                   {timeZoneList.map((value) => (

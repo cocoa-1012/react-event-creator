@@ -2,6 +2,7 @@ import * as types from './actionTypes';
 import axios from 'axios';
 import { storeToken, getTokenData, removeToken } from 'utils/token';
 import { message } from 'antd';
+import routeList from 'utils/routeList';
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 export const loginAction =
@@ -16,6 +17,7 @@ export const loginAction =
         type: types.SET_USER,
         payload: { user },
       });
+      window.location.href = routeList.event.view;
     } catch (e) {
       dispatch({
         type: types.SET_AUTH_ERROR,
