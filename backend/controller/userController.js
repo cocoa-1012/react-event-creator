@@ -28,7 +28,7 @@ const controller = {
           }
         );
 
-        sendMail(generatedPassword, req.get('host'), user.email);
+        sendMail(generatedPassword, `${req.hostname}:3000`, email);
         return res.status(200).json(user);
       }
 
@@ -44,7 +44,7 @@ const controller = {
           }
         );
 
-        sendMail(generatedPassword, req.get('host'), user.email);
+        sendMail(generatedPassword, `${req.hostname}:3000`, email);
         return res.status(200).json(user);
       }
 
