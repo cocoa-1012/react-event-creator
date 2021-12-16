@@ -1,6 +1,6 @@
 import * as types from './actionTypes';
 import axios from 'axios';
-import { storeToken, getTokenData, removeToken } from 'utils/token';
+import { storeToken, getTokenData, removeToken, getToken } from 'utils/token';
 import { message } from 'antd';
 import routeList from 'utils/routeList';
 
@@ -28,7 +28,7 @@ export const loginAction =
     }
   };
 
-axios.defaults.headers.common['Authorization'] = getTokenData();
+axios.defaults.headers.common['Authorization'] = getToken();
 export const findMe = () => async (dispatch) => {
   try {
     const { data } = await axios.get('/api/auth/me');

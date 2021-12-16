@@ -28,7 +28,7 @@ const controller = {
           }
         );
 
-        sendMail(generatedPassword, `${req.hostname}:3000`, email);
+        sendMail(generatedPassword, `http://${req.hostname}:3000`, email);
         return res.status(200).json(user);
       }
 
@@ -44,7 +44,7 @@ const controller = {
           }
         );
 
-        sendMail(generatedPassword, `${req.hostname}:3000`, email);
+        sendMail(generatedPassword, `http://${req.hostname}:3000`, email);
         return res.status(200).json(user);
       }
 
@@ -58,7 +58,7 @@ const controller = {
 
       const userSave = await User.create(userData);
 
-      sendMail(generatedPassword, `${req.hostname}:3000`, email);
+      sendMail(generatedPassword, `http://${req.hostname}:3000`, email);
 
       const user = await User.findByPk(userSave.id, {
         attributes: { exclude: ['isDeleted', 'updatedAt', 'password'] },

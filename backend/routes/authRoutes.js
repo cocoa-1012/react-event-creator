@@ -4,6 +4,7 @@ const {
   me,
   updateName,
   updatePassword,
+  tokenValidate,
 } = require('../controller/authController');
 const {
   userLoginValidator,
@@ -29,5 +30,5 @@ router.put(
   validationErrorResponse,
   updatePassword
 );
-
+router.get('/validate', authenticate, tokenValidate);
 module.exports = router;
