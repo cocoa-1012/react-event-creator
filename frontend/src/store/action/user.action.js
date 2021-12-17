@@ -43,7 +43,7 @@ export const getAllUser = () => async (dispatch) => {
       type: types.SET_USER_ERROR,
       payload: {
         errors: e?.response?.data,
-        type: 'add',
+        type: 'all',
       },
     });
   }

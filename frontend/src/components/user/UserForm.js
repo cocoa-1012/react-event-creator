@@ -19,8 +19,6 @@ const UserForm = ({ addUser, errors }) => {
         setTimeout(() => {
           navigate(routeList.user.view);
         }, 1300);
-      } else {
-        message.error('Error. Please Try again!');
       }
     });
   };
