@@ -28,7 +28,7 @@ const validation = {
       return true;
     }),
     body('time_to').custom((_, { req }) => {
-      if (req.body.date_to && !value) {
+      if (!req.body.date_to && !value) {
         throw Error('Time to is required');
       }
       return true;

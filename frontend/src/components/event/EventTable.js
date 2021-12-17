@@ -77,7 +77,6 @@ const columns = [
               </Button>
             </Popconfirm>
           </div>
-          ,
         </Space>
       );
     },
@@ -96,9 +95,11 @@ const EventTable = ({ events, deleteEvent }) => {
       : '';
     const date = `${date_from} - ${date_to} `;
 
-    const time_from = moment(event.time_from).format('h:mm a');
-    const time_to = moment(event.time_to).format('h:mm a');
-    const time = `${time_from} - ${time_to}`;
+    const time_from = event.time_from
+      ? moment(event.time_from).format('h:mm a')
+      : '';
+    const time_to = event.time_to ? moment(event.time_to).format('h:mm a') : '';
+    const time = time_from && time_to ? `${time_from} - ${time_to}` : '';
 
     const data = { ...event, location, date, time };
     data.deleteEvent = deleteEvent;
