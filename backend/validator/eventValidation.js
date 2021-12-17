@@ -21,14 +21,14 @@ const validation = {
       .not()
       .isEmpty()
       .withMessage('Event date from is required!'),
-    body('time_from').custom((_, { req }) => {
-      if (!req.body.date_to) {
+    body('time_from').custom((value, { req }) => {
+      if (!req.body.date_to && !value) {
         throw Error('Time from is required');
       }
       return true;
     }),
     body('time_to').custom((_, { req }) => {
-      if (!req.body.date_to) {
+      if (req.body.date_to && !value) {
         throw Error('Time to is required');
       }
       return true;
