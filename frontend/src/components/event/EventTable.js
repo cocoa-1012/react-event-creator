@@ -65,17 +65,18 @@ const columns = [
               <FaPen />
             </Link>
           </Button>
-          <Popconfirm
-            title='Are you want to delete this event？'
-            icon={<FaTrashAlt style={{ color: 'red' }} />}
-            onConfirm={() => deleteEvent(id)}
-            okText='Yes'
-            cancelText='No'
-          >
-            <Button>
-              <FaTrashAlt />
-            </Button>
-          </Popconfirm>
+          <div className='yea'>
+            <Popconfirm
+              title='Are you want to delete this event？'
+              onConfirm={() => deleteEvent(id)}
+              okText='Yes'
+              cancelText='No'
+            >
+              <Button>
+                <FaTrashAlt />
+              </Button>
+            </Popconfirm>
+          </div>
           ,
         </Space>
       );
