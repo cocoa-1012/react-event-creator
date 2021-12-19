@@ -90,7 +90,7 @@ const EventTable = ({ events, deleteEvent }) => {
     const date_from = event.date_from
       ? moment(event.date_from).format('MMM DD, Y')
       : '';
-    const date_to = event.date_from
+    const date_to = event.date_to
       ? moment(event.date_to).format('MMM DD, Y')
       : '';
     const date = `${date_from} - ${date_to} `;

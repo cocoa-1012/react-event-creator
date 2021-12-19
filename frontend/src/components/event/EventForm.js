@@ -94,10 +94,10 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
         city: event?.city || '',
         coordinates: event?.coordinates || '',
         country: event?.country || '',
-        date_from: moment(event.date_from) || '',
-        date_to: moment(event.date_to) || '',
-        time_from: moment(event.time_from) || '',
-        time_to: moment(event.time_to) || '',
+        date_from: event.date_from ? moment(event.date_from) : '',
+        date_to: event.date_to ? moment(event.date_to) : '',
+        time_from: event.time_from ? moment(event.time_from) : '',
+        time_to: event.time_to ? moment(event.time_to) : '',
         timezone: event?.timezone || '',
         source_url: event?.source_url || '',
         description: event?.description || '',
@@ -377,7 +377,6 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
                   ({ getFieldValue }) => ({
                     validator(_, value) {
                       const { date_to, date_from, time_from } = getFieldValue();
-                      console.log({ value });
                       const isDateSame = moment(date_from).isSame(
                         date_to,
                         'day'
