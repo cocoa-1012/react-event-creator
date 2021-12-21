@@ -14,6 +14,8 @@ const validator = {
       .not()
       .isEmpty()
       .withMessage('Please enter a username')
+      .isLength({ max: 15 })
+      .withMessage('User name must not be greater than 15 chars')
       .custom(async (username, { req }) => {
         const userData = await User.findOne({ where: { username } });
 

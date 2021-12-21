@@ -66,6 +66,16 @@ const UserForm = ({ addUser, errors }) => {
                       required: true,
                       message: 'Username is required!',
                     },
+                    () => ({
+                      validator(_, value) {
+                        if (value.length > 15) {
+                          return Promise.reject(
+                            'User name must not be greater than 15 chars'
+                          );
+                        }
+                        return Promise.resolve();
+                      },
+                    }),
                   ]}
                   key='username'
                 >
