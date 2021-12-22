@@ -3,11 +3,10 @@ import axios from 'axios';
 import { getToken } from 'utils/token';
 
 axios.defaults.headers.common['Authorization'] = getToken();
-axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 export const addUser = (values, cb) => async (dispatch) => {
   try {
-    const res = await axios.post('/user', values);
+    const res = await axios.post('/api/user', values);
     const user = res.data;
     dispatch({
       type: types.ADD_USER,
@@ -31,7 +30,7 @@ export const addUser = (values, cb) => async (dispatch) => {
 
 export const getAllUser = () => async (dispatch) => {
   try {
-    const res = await axios.get('/user');
+    const res = await axios.get('/api/user');
     const users = res.data;
     dispatch({
       type: types.SET_ALL_USERS,
@@ -44,7 +43,7 @@ export const getAllUser = () => async (dispatch) => {
       type: types.SET_USER_ERROR,
       payload: {
         errors: e?.response?.data,
-        type: 'add',
+        type: 'all',
       },
     });
   }
@@ -52,7 +51,7 @@ export const getAllUser = () => async (dispatch) => {
 
 export const deleteUser = (id) => async (dispatch) => {
   try {
-    await axios.delete(`/user/${id}`);
+    await axios.delete(`/api/user/${id}`);
 
     dispatch({
       type: types.DELETE_USER,

@@ -19,8 +19,6 @@ const UserForm = ({ addUser, errors }) => {
         setTimeout(() => {
           navigate(routeList.user.view);
         }, 1300);
-      } else {
-        message.error('Error. Please Try again!');
       }
     });
   };
@@ -68,6 +66,16 @@ const UserForm = ({ addUser, errors }) => {
                       required: true,
                       message: 'Username is required!',
                     },
+                    () => ({
+                      validator(_, value) {
+                        if (value.length > 15) {
+                          return Promise.reject(
+                            'User name must not be greater than 15 chars'
+                          );
+                        }
+                        return Promise.resolve();
+                      },
+                    }),
                   ]}
                   key='username'
                 >

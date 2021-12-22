@@ -8,10 +8,12 @@ import { getAllUser } from 'store/action/user.action';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import routeList from 'utils/routeList';
+import useSetTitle from 'hook/setTitle';
 
 const ViewUsers = ({ getAllUser }) => {
   useEffect(() => getAllUser(), [getAllUser]);
   const { isAuthenticated, user } = useSelector((state) => state.auth);
+  useSetTitle('All User');
   if (!isAuthenticated) {
     return <Navigate to='/' />;
   }

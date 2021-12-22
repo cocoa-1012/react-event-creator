@@ -1,4 +1,4 @@
-const template = ({ generatedPassword, siteUrl }) => `
+const template = ({ generatedPassword, siteUrl, name }) => `
 <!DOCTYPE html>
 <html>
   <head>
@@ -145,10 +145,10 @@ const template = ({ generatedPassword, siteUrl }) => `
                   line-height: 24px;
                 "
               >
-                <p style="margin: 0">Welcome, Md Monirul Islam</p>
+                <p style="margin: 0">Welcome, ${name}</p>
                 <p style="margin: 0">
                   We have accept you as our site user. Now you can use our site
-                  after login. To login you account use your email and this
+                  after login. To login you account use your username and this
                   password '${generatedPassword}'
                 </p>
               </td>

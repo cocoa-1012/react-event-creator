@@ -1,7 +1,6 @@
 const { internalServerError } = require('../utils/errorResponses');
 const moment = require('moment');
 const User = require('../models/User');
-const generate = require('../utils/passwordGenerator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -31,7 +30,7 @@ const controller = {
         {
           email: user.email,
           username: user.username,
-          iat: new Date().getTime(),
+          iat: Date.now(),
           exp: Date.now() + 1000 * 60 * 60 * 2,
           isAdmin,
         },
@@ -90,12 +89,40 @@ const controller = {
       const salt = await bcrypt.genSalt(parseInt(SALT_ROUND));
       const password = await bcrypt.hash(newPassword, salt);
 
-      await User.update({ password }, { where: { id: req.user.id } });
+      await User.update(
+        { password, isPassReset: true },
+        { where: { id: req.user.id } }
+      );
       return res.status(200).json({
         message: 'User password updated',
       });
     } catch (e) {
       internalServerError(res, e);
+    }
+  },
+  tokenValidate: async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+
+      const token = authHeader.split(' ')[1];
+
+      const tokenDecode = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
+
+      const expireDate = tokenDecode.exp;
+      const currenDate = Date.now();
+
+      const diff = currenDate - expireDate;
+      console.log(typeof diff);
+      if (diff > 0) {
+        return res.status(200).json({
+          expired: true,
+        });
+      }
+      return res.status(200).json({
+        expired: false,
+      });
+    } catch (error) {
+      internalServerError(res, error);
     }
   },
 };

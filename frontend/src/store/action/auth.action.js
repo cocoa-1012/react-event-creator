@@ -1,15 +1,14 @@
 import * as types from './actionTypes';
 import axios from 'axios';
-import { storeToken, getTokenData, removeToken } from 'utils/token';
+import { storeToken, getTokenData, removeToken, getToken } from 'utils/token';
 import { message } from 'antd';
 import routeList from 'utils/routeList';
-axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 export const loginAction =
   ({ username, password }) =>
   async (dispatch) => {
     try {
-      const res = await axios.post('/auth/login', { username, password });
+      const res = await axios.post('/api/auth/login', { username, password });
       const { token } = res.data;
       storeToken(token);
       const user = getTokenData();
@@ -29,10 +28,10 @@ export const loginAction =
     }
   };
 
-axios.defaults.headers.common['Authorization'] = getTokenData();
+axios.defaults.headers.common['Authorization'] = getToken();
 export const findMe = () => async (dispatch) => {
   try {
-    const { data } = await axios.get('/auth/me');
+    const { data } = await axios.get('/api/auth/me');
     dispatch({
       type: types.SET_AUTH_ME,
       payload: {
@@ -52,7 +51,7 @@ export const findMe = () => async (dispatch) => {
 
 export const updateUserFullName = (name) => async (dispatch) => {
   try {
-    const { data } = await axios.post('/auth/me/name', { name });
+    const { data } = await axios.post('/api/auth/me/name', { name });
 
     dispatch({
       type: types.SET_AUTH_USER_NAME,
@@ -74,30 +73,40 @@ export const updateUserFullName = (name) => async (dispatch) => {
   }
 };
 
-export const updatePassword = (values, cb) => async (dispatch) => {
-  try {
-    const { data } = await axios.put('/auth/me/password', values);
+export const updatePassword =
+  (values, queryMessage, cb) => async (dispatch) => {
+    try {
+      const { data } = await axios.put('/api/auth/me/password', values);
 
-    message.success({
-      content: data.message,
-      style: {
-        marginTop: '10vh',
-      },
-    });
+      message.success({
+        content: data.message,
+        style: {
+          marginTop: '10vh',
+        },
+      });
 
-    cb(true);
-  } catch (e) {
-    dispatch({
-      type: types.SET_AUTH_ERROR,
-      payload: {
-        type: 'password',
-        errors: e?.response?.data,
-      },
-    });
+      if (queryMessage) {
+        dispatch({
+          type: types.SET_AUTH_USER_IS_PASS_RESET,
+          payload: {
+            isPassReset: true,
+          },
+        });
+      }
 
-    cb(false);
-  }
-};
+      cb(true);
+    } catch (e) {
+      dispatch({
+        type: types.SET_AUTH_ERROR,
+        payload: {
+          type: 'password',
+          errors: e?.response?.data,
+        },
+      });
+
+      cb(false);
+    }
+  };
 
 export const logout = () => (dispatch) => {
   removeToken();

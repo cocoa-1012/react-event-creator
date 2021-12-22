@@ -21,8 +21,19 @@ const validation = {
       .not()
       .isEmpty()
       .withMessage('Event date from is required!'),
-    body('time_from').not().isEmpty().withMessage('Time is is required!'),
-    body('date_to').not().isEmpty().withMessage('Time is is required!'),
+    body('time_from').custom((value, { req }) => {
+      if (!req.body.date_to && !value) {
+        throw Error('Time from is required');
+      }
+      return true;
+    }),
+    body('time_to').custom((value, { req }) => {
+      if (!req.body.date_to && !value) {
+        throw Error('Time to is required');
+      }
+      return true;
+    }),
+
     body('source_url').not().isEmpty().withMessage('Source URL is required!'),
   ],
 };

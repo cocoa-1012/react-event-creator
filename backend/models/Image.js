@@ -11,11 +11,9 @@ const imageSchema = {
   },
   width: {
     type: DataTypes.INTEGER,
-    defaultValue: 200,
   },
   height: {
     type: DataTypes.INTEGER,
-    defaultValue: 300,
   },
   isDeleted: {
     type: DataTypes.BOOLEAN,

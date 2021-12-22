@@ -38,19 +38,25 @@ const columns = [
     title: 'Action',
     dataIndex: 'id',
     key: 'action',
-    render: (id, { deleteUser }) => {
+    render: (id, { deleteUser, isAdmin }) => {
       return (
         <Space>
-          <Popconfirm
-            okText='Yes'
-            cancelText='No'
-            title='Are you sure to delete this user?'
-            onConfirm={() => deleteUser(id)}
-          >
-            <Button>
+          {isAdmin ? (
+            <Button disabled={true}>
               <FaTrashAlt />
             </Button>
-          </Popconfirm>
+          ) : (
+            <Popconfirm
+              okText='Yes'
+              cancelText='No'
+              title='Are you sure to delete this user?'
+              onConfirm={() => deleteUser(id)}
+            >
+              <Button>
+                <FaTrashAlt />
+              </Button>
+            </Popconfirm>
+          )}
         </Space>
       );
     },
@@ -62,6 +68,7 @@ const UserTable = ({ users, deleteUser }) => {
     setDataSource(
       users.map((user) => {
         user.deleteUser = deleteUser;
+        user.isAdmin = user.user_type === 'A';
         return user;
       })
     );

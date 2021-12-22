@@ -7,8 +7,9 @@ import { findMe } from 'store/action/auth.action';
 import { fetchAllEvents } from 'store/action/event.action';
 import { getAllUser } from 'store/action/user.action';
 import { logout } from 'store/action/auth.action';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import routeList from 'utils/routeList';
+import useQuery from 'hook/useQuery';
 const useStyles = createUseStyles({
   subMenu: {
     padding: 0,
@@ -27,17 +28,22 @@ const useStyles = createUseStyles({
   },
 });
 
-const Header = ({
-  findMe,
-  fetchAllEvents,
-  getAllUser,
-  logout,
-  name,
-  isAdmin,
-  isAuthenticated,
-}) => {
+const Header = (props) => {
   const classes = useStyles();
+  const {
+    findMe,
+    fetchAllEvents,
+    getAllUser,
+    logout,
+    name,
+    isAdmin,
+    isAuthenticated,
+    isPassReset,
+  } = props;
 
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const messageQuery = useQuery('message');
   useEffect(() => {
     if (isAuthenticated) {
       findMe();
@@ -51,7 +57,16 @@ const Header = ({
     }
   }, [getAllUser, isAdmin, isAuthenticated]);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (isAuthenticated) {
+      if (!isPassReset && pathname !== routeList.profile.updatePassword) {
+        navigate(
+          `${routeList.profile.updatePassword}?message=Please update your password first`
+        );
+      }
+    }
+  }, [isAuthenticated, isPassReset, messageQuery, navigate, pathname]);
+
   const logoutHandler = () => {
     const result = logout();
     if (result) {
@@ -86,10 +101,10 @@ const Header = ({
 };
 
 const mapStateToProps = (state) => {
-  const { name } = state.auth.me;
+  const { name, isPassReset } = state.auth.me;
   const { isAdmin } = state.auth.user;
   const { isAuthenticated } = state.auth;
-  return { name, isAdmin, isAuthenticated };
+  return { name, isAdmin, isAuthenticated, isPassReset };
 };
 
 const actions = { findMe, fetchAllEvents, getAllUser, logout };

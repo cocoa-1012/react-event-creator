@@ -1,18 +1,49 @@
-## Event creator.
+## Event Creator
 
-### Install Packages
+## Tech Stack
 
-1. Clone this repo
-2. Run `yarn` or `npm install`
-3. Follow backend instruction
-4. Follow frontend instruction
-5. Base commands
+**Client:**
 
-### Backend Instruction
+- React,
+- Redux (State Management),
+- Ant Design (Design)
+- React Router (v6)
+- React Icons (For Icons)
+- Axios (Server Request)
 
-1. Run `cd backend` and `yarn` or `npm install`
-2. Rename the `.env.example` to `.env`
-3. And fill this property with values
+**Server:**
+
+Server code Design in MVC pattern
+
+- Node (v16.13.1),
+- Express
+- Seqeuelize (ORM for database)
+- Passport and Passport JWT (Autentications)
+- Bcrypt (to encrypte user password)
+- Node Mailer (Sending mail)
+- Multer (file upload)
+- Moment js (date and time)
+
+## Environment Requirements
+
+```
+1. NodeJs (v16.x)
+2. Npm (v8.x) or Yarn (1.22.x)
+
+```
+
+## Project Setup
+
+`N:B: This is for development`
+
+- Clone the repository
+- Install pacakages, run `yarn` or `npm install`
+
+## Backend Setup
+
+- Run `cd backend` and `yarn` or `npm install`
+- Rename the `.env.example` to `.env`
+- And fill this property with values
 
 ```
 DATABASE_NAME=
@@ -26,35 +57,44 @@ USER_MAIL_NAME=
 USER_MAIL_PASSWORD=
 ```
 
-3. Open your database and import `database.sql` file
-4. Default login username `admin` and password `pass1234`
+- Open your database and import `database.sql` file
+- Default login username `admin` and password `pass1234`
 
-##### Commands
+## Frontend Setup
 
-1. `yarn start` or `npm start` : to run server on production mode
-2. `yarn run dev` or `npm run dev` : to run server on development mode
-
-### Frontend Instruction
-
-1. Run `cd frontend` and `yarn` or `npm install`
-2. Rename the `.env.example` to `.env`
-3. And fill this property with values
-
-```
-REACT_APP_BASE_URL=
-```
+- Go to frontend directory , run `cd frontend`
+- Install all packages , run `yarn` or `npm install`
 
 `N:B: Add /api after the base url `
 
-##### Commands
+# Project Setup in Server
 
-1. `yarn start` or `npm start` : to run server on production mode
-2. `yarn build` or `npm build` : to run build the project
+- Backend setup in server same as Backend setup
+- Frontend setup
+  - Got to frontend directory
+  - Run `yarn` or `npm install`
+  - Run `yarn global add serve` or `npm i -g serve`
+  - Run `yarn build` or `npm build`
+  - Run `serve -s build`
 
-### Base Commands
+## Commands
 
-1. `yarn start` or `npm start`: to run backend and frontend at the same time.
-2. `yarn run server`: to run the backend only
-3. `yarn run client`: to run the frontend only
+- Base
+  - `start`: Run frontend and backend at same time
+  - `server`: Run backend only
+  - `client`: Run frontend only
 
-Good Luck
+####
+
+- Frontend
+
+  - `start`: run project
+  - `build`: build the project
+
+- Backend
+  - `start`: run server in production
+  - `dev`: run serv in development
+
+## Authors
+
+- [Md Monirul Islam](https://www.github.com/mdmonir027)

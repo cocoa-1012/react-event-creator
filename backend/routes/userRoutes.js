@@ -4,6 +4,7 @@ const { userRegisterValidator } = require('../validator/userValidation');
 const { validationErrorResponse } = require('../utils/errorResponses');
 const authenticate = require('../middleware/auth/authenticate');
 const isAdmin = require('../middleware/auth/isAdmin');
+const deleteNoAdmin = require('../middleware/deleteNoAdmin');
 
 router.get('/', authenticate, isAdmin, getAll);
 router.post(
@@ -14,5 +15,5 @@ router.post(
   validationErrorResponse,
   create
 );
-router.delete('/:id', authenticate, isAdmin, remove);
+router.delete('/:id', authenticate, isAdmin, deleteNoAdmin, remove);
 module.exports = router;

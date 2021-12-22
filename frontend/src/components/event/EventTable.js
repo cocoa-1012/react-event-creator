@@ -65,18 +65,18 @@ const columns = [
               <FaPen />
             </Link>
           </Button>
-          <Popconfirm
-            title='Are you want to delete this event？'
-            icon={<FaTrashAlt style={{ color: 'red' }} />}
-            onConfirm={() => deleteEvent(id)}
-            okText='Yes'
-            cancelText='No'
-          >
-            <Button>
-              <FaTrashAlt />
-            </Button>
-          </Popconfirm>
-          ,
+          <div className='yea'>
+            <Popconfirm
+              title='Are you want to delete this event？'
+              onConfirm={() => deleteEvent(id)}
+              okText='Yes'
+              cancelText='No'
+            >
+              <Button>
+                <FaTrashAlt />
+              </Button>
+            </Popconfirm>
+          </div>
         </Space>
       );
     },
@@ -90,14 +90,16 @@ const EventTable = ({ events, deleteEvent }) => {
     const date_from = event.date_from
       ? moment(event.date_from).format('MMM DD, Y')
       : '';
-    const date_to = event.date_from
+    const date_to = event.date_to
       ? moment(event.date_to).format('MMM DD, Y')
       : '';
     const date = `${date_from} - ${date_to} `;
 
-    const time_from = moment(event.time_from).format('h:mm a');
-    const time_to = moment(event.time_to).format('h:mm a');
-    const time = `${time_from} - ${time_to}`;
+    const time_from = event.time_from
+      ? moment(event.time_from).format('h:mm a')
+      : '';
+    const time_to = event.time_to ? moment(event.time_to).format('h:mm a') : '';
+    const time = time_from && time_to ? `${time_from} - ${time_to}` : '';
 
     const data = { ...event, location, date, time };
     data.deleteEvent = deleteEvent;

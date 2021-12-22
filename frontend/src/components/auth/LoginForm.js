@@ -28,7 +28,7 @@ const LoginForm = ({ loginAction, errors }) => {
   };
   useEffect(() => {
     const errorObject =
-      Object.keys(errors).length > 0
+      errors && Object.keys(errors).length > 0
         ? Object.entries(errors).map(([name, value]) => {
             return {
               name,

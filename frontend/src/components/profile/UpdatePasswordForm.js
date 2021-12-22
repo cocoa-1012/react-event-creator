@@ -4,16 +4,22 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { updatePassword } from 'store/action/auth.action';
 import { useNavigate } from 'react-router-dom';
-
+import useQuery from 'hook/useQuery';
+import routeList from 'utils/routeList';
 const UpdatePasswordForm = ({ updatePassword, errors }) => {
   const navigate = useNavigate();
+  const queryMessage = useQuery('message');
   const [form] = Form.useForm();
   const onFinish = (values) => {
-    updatePassword(values, (result) => {
+    updatePassword(values, queryMessage, (result) => {
       if (result) {
         message.success('Redirecting....');
         setTimeout(() => {
-          navigate('/profile');
+          if (queryMessage) {
+            navigate(routeList.event.view);
+          } else {
+            navigate(routeList.profile.view);
+          }
         }, 2000);
       }
     });

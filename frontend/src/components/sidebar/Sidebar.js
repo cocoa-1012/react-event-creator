@@ -47,12 +47,12 @@ const Sidebar = ({ logout, isAdmin }) => {
         </Menu.SubMenu>
 
         {isAdmin && (
-          <Menu.SubMenu key='user' icon={<AppstoreOutlined />} title='User'>
+          <Menu.SubMenu key='user' icon={<AppstoreOutlined />} title='Users'>
             <Menu.Item key='5'>
               <Link to={routeList.user.add}>Add User</Link>
             </Menu.Item>
             <Menu.Item key='6'>
-              <Link to={routeList.user.view}>View User</Link>
+              <Link to={routeList.user.view}>View Users</Link>
             </Menu.Item>
           </Menu.SubMenu>
         )}

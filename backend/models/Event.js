@@ -29,7 +29,7 @@ const eventSchema = {
     allowNull: true,
   },
   coordinates: {
-    type: DataTypes.FLOAT,
+    type: DataTypes.STRING,
     default: null,
     allowNull: true,
   },

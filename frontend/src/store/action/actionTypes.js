@@ -2,6 +2,7 @@ export const SET_USER = 'SET_USER';
 export const SET_AUTH_ME = 'SET_AUTH_ME';
 export const SET_AUTH_ERROR = 'SET_AUTH_ERROR';
 export const SET_AUTH_USER_NAME = 'SET_AUTH_USER_NAME';
+export const SET_AUTH_USER_IS_PASS_RESET = 'SET_AUTH_USER_IS_PASS_RESET';
 
 export const SET_ALL_EVENTS = 'SET_ALL_EVENTS';
 export const ADD_EVENT = 'ADD_EVENT';

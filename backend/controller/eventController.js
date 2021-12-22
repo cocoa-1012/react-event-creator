@@ -120,7 +120,6 @@ const controller = {
         time_to,
         source_url,
         rating,
-        created_by,
         timezone,
       } = req.body;
 
@@ -139,7 +138,6 @@ const controller = {
         time_to: time_to || null,
         source_url,
         rating: rating || null,
-        created_by,
         timezone: timezone || null,
       };
 
@@ -171,9 +169,12 @@ const controller = {
     try {
       if (req.file) {
         const { filename } = req.file;
+        const { width, height } = req.body;
         const imageData = {
           filename,
           event_id: req.params.eventId,
+          width: parseInt(width),
+          height: parseInt(height),
         };
         const imageSave = await Image.create(imageData);
         const image = {
@@ -221,7 +222,7 @@ const controller = {
       const { imageId } = req.params;
       await Image.update({ isDeleted: true }, { where: { id: imageId } });
 
-      return res.status(200).json({ message: 'Image Delete successfully!' });
+      return res.status(200).json({ message: 'Image Deleted successfully!' });
     } catch (e) {
       internalServerError(res, e);
     }

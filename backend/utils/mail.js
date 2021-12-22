@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-const sendMail = async (generatedPassword, siteUrl, receiverEmail) => {
+const sendMail = async (name, generatedPassword, siteUrl, receiverEmail) => {
   const { MAIL_HOST_NAME, MAIL_PORT, USER_MAIL_NAME, USER_MAIL_PASSWORD } =
     process.env;
 
@@ -21,7 +21,7 @@ const sendMail = async (generatedPassword, siteUrl, receiverEmail) => {
     to: receiverEmail,
     subject: 'You have been chosen',
     text: 'Welcome',
-    html: template({ generatedPassword, siteUrl }),
+    html: template({ name, generatedPassword, siteUrl }),
   });
   console.log(info.messageId);
   return info;

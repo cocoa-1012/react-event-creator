@@ -94,10 +94,10 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
         city: event?.city || '',
         coordinates: event?.coordinates || '',
         country: event?.country || '',
-        date_from: moment(event.date_from) || '',
-        date_to: moment(event.date_to) || '',
-        time_from: moment(event.time_from) || '',
-        time_to: moment(event.time_to) || '',
+        date_from: event.date_from ? moment(event.date_from) : '',
+        date_to: event.date_to ? moment(event.date_to) : '',
+        time_from: event.time_from ? moment(event.time_from) : '',
+        time_to: event.time_to ? moment(event.time_to) : '',
         timezone: event?.timezone || '',
         source_url: event?.source_url || '',
         description: event?.description || '',
@@ -271,20 +271,25 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
           <Row gutter={20} style={{ marginTop: 10 }}>
             <Col span={12}>
               <Form.Item
-                dependencies={['date_to']}
+                dependencies={['date_to', 'time_from', 'time_to']}
                 name='date_from'
                 rules={[
-                  {
-                    required: true,
-                    message: 'Event date required!',
-                  },
                   () => ({
                     validator(_, value) {
-                      const result = moment(value).diff(moment().toDate()) > 0;
-                      if (result) {
-                        return Promise.resolve();
+                      if (!value) {
+                        return Promise.reject('Date from is required');
                       }
-                      return Promise.reject('Date must be in future date');
+                      const before = moment(value).isBefore(
+                        moment.now(),
+                        'day'
+                      );
+                      const same = moment(value).isSame(moment.now(), 'day');
+
+                      if (before || same) {
+                        return Promise.reject('Date must be in future date');
+                      }
+
+                      return Promise.resolve();
                     },
                   }),
                 ]}
@@ -293,31 +298,32 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
                 <DatePicker
                   style={{ width: '100%' }}
                   placeholder='Event date from'
+                  format='DD-MM-YYYY'
                 />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
-                dependencies={['date_from']}
+                dependencies={['date_from', 'time_to', 'time_from']}
                 key='date_to'
                 name='date_to'
                 rules={[
-                  {
-                    required: true,
-                    message: 'Event date required!',
-                  },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
-                      const result =
-                        moment(value).diff(
-                          moment(getFieldValue.date_from).toDate()
-                        ) > 0;
-                      if (result) {
+                      if (!value) {
                         return Promise.resolve();
                       }
-                      return Promise.reject(
-                        'Date must be greater than date from'
-                      );
+
+                      const date_from = getFieldValue().date_from;
+                      const before = moment(value).isBefore(date_from, 'day');
+
+                      if (before) {
+                        return Promise.reject(
+                          'Date must be greater than date from'
+                        );
+                      }
+
+                      return Promise.resolve();
                     },
                   }),
                 ]}
@@ -325,49 +331,73 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
                 <DatePicker
                   style={{ width: '100%' }}
                   placeholder='Event date to'
+                  format='DD-MM-YYYY'
                 />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
-                dependencies={['time_to']}
+                dependencies={['time_to', 'date_from', 'date_to']}
                 name='time_from'
                 key='time_from'
                 rules={[
-                  {
-                    required: true,
-                    message: 'Time is required!',
-                  },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      const { date_to, date_from } = getFieldValue();
+
+                      const isSame = moment(date_from).isSame(date_to, 'day');
+
+                      if (!isSame && date_to) {
+                        return Promise.resolve();
+                      }
+
+                      if (!value) {
+                        return Promise.reject('Time from is required');
+                      }
+                      return Promise.resolve();
+                    },
+                  }),
                 ]}
               >
                 <TimePicker
                   style={{ width: '100%' }}
                   placeholder='Event time from'
+                  format='HH:mm'
+                  minuteStep={15}
+                  showNow={false}
                 />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
-                dependencies={['time_from']}
+                dependencies={['time_from', 'date_from', 'date_to']}
                 name='time_to'
                 key='time_to'
                 rules={[
-                  {
-                    required: true,
-                    message: 'Time is required!',
-                  },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
-                      const result =
-                        moment(value).diff(
-                          moment(getFieldValue().time_from).toDate()
-                        ) > 0;
-                      if (result) {
+                      const { date_to, date_from, time_from } = getFieldValue();
+                      const isDateSame = moment(date_from).isSame(
+                        date_to,
+                        'day'
+                      );
+
+                      if (!isDateSame && date_to) {
                         return Promise.resolve();
                       }
-                      return Promise.reject(
-                        'Time must be greater than time from'
+                      if (!value) {
+                        return Promise.reject('Time to is required');
+                      }
+                      const isTimeAfter = moment(value).isAfter(
+                        time_from,
+                        'minutes'
                       );
+                      if (!isTimeAfter) {
+                        return Promise.reject(
+                          'Time must be greater than time from'
+                        );
+                      }
+                      return Promise.resolve();
                     },
                   }),
                 ]}
@@ -375,6 +405,9 @@ const EventForm = ({ eventAdd, event, isEdit, eventUpdate, id, errors }) => {
                 <TimePicker
                   style={{ width: '100%' }}
                   placeholder='Event time to'
+                  format='HH:mm'
+                  minuteStep={15}
+                  showNow={false}
                 />
               </Form.Item>
             </Col>
