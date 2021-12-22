@@ -28,12 +28,17 @@ const controller = {
           }
         );
 
-        sendMail(
+        const result = await sendMail(
           user.name,
           generatedPassword,
           `http://${req.hostname}:3000`,
           email
         );
+        if (!result.result) {
+          await User.destroy({ where: { id: user.id } });
+          throw new Error(result.error);
+        }
+
         return res.status(200).json(user);
       }
 
@@ -49,12 +54,16 @@ const controller = {
           }
         );
 
-        sendMail(
+        const result = await sendMail(
           user.name,
           generatedPassword,
           `http://${req.hostname}:3000`,
           email
         );
+        if (!result.result) {
+          await User.destroy({ where: { id: user.id } });
+          throw new Error(result.error);
+        }
         return res.status(200).json(user);
       }
 
@@ -68,12 +77,17 @@ const controller = {
 
       const userSave = await User.create(userData);
 
-      sendMail(
+      const result = await sendMail(
         userSave.name,
         generatedPassword,
         `http://${req.hostname}:3000`,
         email
       );
+
+      if (!result.result) {
+        await User.destroy({ where: { id: userSave.id } });
+        throw new Error(result.error);
+      }
 
       const user = await User.findByPk(userSave.id, {
         attributes: { exclude: ['isDeleted', 'updatedAt', 'password'] },

@@ -25,7 +25,7 @@ const UserInfo = ({ userData, updateUserFullName }) => {
     <div>
       <div>
         <Row>
-          <Col span={18}>
+          <Col xs={24} md={20} xl={18}>
             <table className={style.table}>
               <thead>
                 <tr>

@@ -1,6 +1,7 @@
 import * as types from './actionTypes';
 import axios from 'axios';
 import { getToken } from 'utils/token';
+import { message } from 'antd';
 
 axios.defaults.headers.common['Authorization'] = getToken();
 
@@ -17,13 +18,18 @@ export const addUser = (values, cb) => async (dispatch) => {
 
     cb(true);
   } catch (e) {
-    dispatch({
-      type: types.SET_USER_ERROR,
-      payload: {
-        errors: e?.response?.data,
-        type: 'add',
-      },
-    });
+    const statusCode = e?.response?.status;
+    if (statusCode === 500) {
+      message.error('Error! Please try again!', 1.5);
+    } else {
+      dispatch({
+        type: types.SET_USER_ERROR,
+        payload: {
+          errors: e?.response?.data,
+          type: 'add',
+        },
+      });
+    }
     cb(false);
   }
 };
