@@ -1,5 +1,8 @@
 const User = require('../models/User');
-const { internalServerError } = require('../utils/errorResponses');
+const {
+  internalServerError,
+  mailSendError,
+} = require('../utils/errorResponses');
 const generate = require('../utils/passwordGenerator');
 const bcrypt = require('bcrypt');
 const Event = require('../models/Event');
@@ -36,7 +39,7 @@ const controller = {
         );
         if (!result.result) {
           await User.destroy({ where: { id: user.id } });
-          throw new Error(result.error);
+          return mailSendError(res, result.error);
         }
 
         return res.status(200).json(user);
@@ -62,7 +65,7 @@ const controller = {
         );
         if (!result.result) {
           await User.destroy({ where: { id: user.id } });
-          throw new Error(result.error);
+          return mailSendError(res, result.error);
         }
         return res.status(200).json(user);
       }
@@ -86,7 +89,7 @@ const controller = {
 
       if (!result.result) {
         await User.destroy({ where: { id: userSave.id } });
-        throw new Error(result.error);
+        return mailSendError(res, result.error);
       }
 
       const user = await User.findByPk(userSave.id, {

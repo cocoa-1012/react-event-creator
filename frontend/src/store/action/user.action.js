@@ -18,18 +18,20 @@ export const addUser = (values, cb) => async (dispatch) => {
 
     cb(true);
   } catch (e) {
-    const statusCode = e?.response?.status;
-    if (statusCode === 500) {
-      message.error('Error! Please try again!', 1.5);
-    } else {
-      dispatch({
-        type: types.SET_USER_ERROR,
-        payload: {
-          errors: e?.response?.data,
-          type: 'add',
-        },
-      });
+    const error = e?.response?.data;
+
+    if (error && error.isMailIssue) {
+      message.error(error.message, 2.5);
     }
+
+    dispatch({
+      type: types.SET_USER_ERROR,
+      payload: {
+        errors: e?.response?.data,
+        type: 'add',
+      },
+    });
+
     cb(false);
   }
 };
